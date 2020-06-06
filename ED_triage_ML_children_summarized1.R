@@ -73,9 +73,9 @@ y2015 <- x %>%
 
 mydataset= bind_rows(y2007,y2008)
 
-# names(y2009) = names(mydataset)
+names(y2009) = names(mydataset)
 mydataset= bind_rows(mydataset,y2009)
-# names(y2010) = names(mydataset)
+names(y2010) = names(mydataset)
 mydataset= bind_rows(mydataset,y2010)
 mydataset= bind_rows(mydataset,y2011)
 mydataset= bind_rows(mydataset,y2012)
@@ -114,6 +114,7 @@ df_models_triage <- mydataset3 %>%
   rename(
     triage = IMMEDR
   )
+
 df_models_triage[,1:22]< sapply(df_models_triage[,1:22],as.character)
 df_models_triage[,1:22]< sapply(df_models_triage[,1:22],as.numeric)
 
