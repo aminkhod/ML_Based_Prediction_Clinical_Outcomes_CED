@@ -37,12 +37,12 @@ df_models_triage = read.csv('ed2007-spss.csv')
  plot(roc_logistic_triage, legacy.axes=TRUE)
 
 # Confusion Matrix -- threshold = prevalence
- prevalence <- mean(as.numeric(df_test_triage$outcome)-1) 
- pred_logistic_class_triage <- ifelse(pred_logistic_prob_triage >=  prevalence, 1, 0) %>% factor(labels = c("No", "Yes"))
+ prevalence <- mean(as.numeric(df_test_triage$outcome)) 
+ pred_logistic_class_triage <- ifelse(pred_logistic_prob_triage >=  prevalence, 1, 0) %>% factor(labels = c(0, 1))
  caret::confusionMatrix(data      = pred_logistic_class_triage,   
-                       reference = df_test_triage$outcome,
+                        reference = factor(df_test_triage$outcome),
                        mode      = "sens_spec",
-                       positive  = "Yes")
+                       positive  = '1')
 
 
 # Alternate cut-off for severe class imbalance
@@ -151,6 +151,7 @@ myTrainingControl <- trainControl(method = "cv",
                                   classProbs = TRUE, 
                                   verboseIter = FALSE)
 # Train RF
+library(randomForest)
 fit_RF <- caret::train(outcome ~ .,   
                        data = df_train, 
                        method = "ranger", 
